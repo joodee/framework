@@ -1,0 +1,174 @@
+.support-placeholder{
+  display: none;
+}
+table th .icon-chevron-up,
+table th .icon-chevron-down{
+  margin: 0 4px;
+}
+label.error{
+  float: left;
+  clear: both;
+}
+.auth-box{
+  overflow: visible;
+}
+.auth-box .create-account{
+  margin: 6px 20px 0 20px;
+}
+.login-form .modal-body{
+  padding-left: 230px;
+  background: url(../images/lock_128x128.png) 40px 20px no-repeat;
+}
+.login-form .control-remember{
+  padding-top: 12px
+}
+.login-form .modal-footer {
+  text-align: left;
+  padding-left: 230px;
+}
+.login-form .forgot-password{
+  position: relative;
+  margin-top: 4px;
+  margin-left: -200px;
+}
+.account-profile #profile_first_name,
+.account-registration #reg_first_name{
+  width: 94px;
+}
+.account-profile #profile_last_name,
+.account-registration #reg_last_name{
+  width: 94px;
+  margin-left: 4px;
+}
+.account-profile #profile_birthday_day,
+.account-registration #reg_birthday_day{
+  width: 32px;
+  margin-right: 4px;
+}
+.account-profile #profile_birthday_month,
+.account-registration #reg_birthday_month{
+  width: 100px !important;
+  margin-right: 4px;
+}
+.account-profile #profile_birthday_year,
+.account-registration #reg_birthday_year{
+  width: 48px;
+}
+.account-profile #profile_mobile_phone,
+.account-registration #reg_mobile_phone{
+  width: 175px;
+}
+.account-profile #profile_location_iso2,
+.account-registration #reg_location_iso2{
+  width: 224px;
+}
+.account-profile #profile_timezone_area{
+  width: 86px;
+}
+.account-profile #profile_timezone_value{
+  margin-left: 4px;
+  width: 130px;
+}
+
+
+
+.control-captcha input{
+  width: 129px;
+}
+.control-captcha .icon-refresh{
+  margin-top: 2px;
+}
+.control-captcha .help-block{
+  margin-top: 9px;
+  margin-bottom:4px;
+}
+
+.add-on .blackPopup{
+  margin-left: -13px;
+  margin-top: -118px !important;
+}
+.add-on .formErrorContent{
+  text-align: left;
+  text-shadow: none;
+}
+
+.icon-location-flag{
+  background: url(../images/flags.gif) left top no-repeat;
+  margin: 2px 4px;
+  width: 16px;
+  height: 11px;
+  display: block;
+  float: left;
+}
+.ui-autocomplete-mobile-phone-location {
+  width: 460px;
+  max-height: 200px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  /* add padding to account for vertical scrollbar */
+  /*padding-right: 20px;*/
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete-mobile-phone-location {
+  height: 200px;
+}
+.ui-autocomplete-mobile-phone-location .icon-location-flag{
+  margin: 5px 10px 0 2px;
+}
+.ui-autocomplete-mobile-phone-location .phone-location-code{
+  color: #999999;
+}
+.ui-autocomplete-mobile-phone-location .ui-menu-item a:hover{
+
+  border: none !important;
+  margin: 0 !important;
+}
+
+/*---------- Backend
+------------------------------------------*/
+.account-manager .actions-column{
+  min-width: 260px;
+  width: 260px;
+}
+.table-account-info{
+  width: 510px;
+}
+/*--------- Tablet
+------------------------- */
+@media (max-width: 979px) {
+  .account-manager .actions-column{
+    min-width: 168px;
+    width: 168px;
+  }
+}
+/*--------- End of Tablet
+--------------------------*/
+
+/*--------- IE7-8 hacks
+------------------------------------*/
+#form_contact{
+  //padding-right: 10px;
+}
+#modal_sendmail .modal-body{
+  //padding-right: 30px;
+}
+.account-sidebar-filter{
+  background-color: #ffffff;
+  //padding-right: 30px;
+  overflow: hidden;
+}
+#form_contact .form-actions,
+.account-sidebar-filter .form-actions{
+  //margin-right: -13px;
+}
+/*--------- End of IE7-8 hacks
+------------------------------------*/
+.account-sidebar-filter .controls-margin{
+  margin-right: 14px;
+}
+.account-manager table td{
+  line-height: 28px;
+}

@@ -1,0 +1,83 @@
+<?php
+
+return array(
+    /**
+     * Enable APC (Alternative PHP Cache)
+     * It caches merged configuration files and module
+     * class paths for autoload functionality.
+     * Set NULL to drop actual cache on next request.
+     */
+    'apc_enabled' => false,
+    /**
+     * APC Time To Live.
+     * Set 0 for unlimited lifetime (NOT RECOMMENDED!).
+     * Note: this setting is set on cache store and
+     * will not affect until actual cache becomes outdated.
+     */
+    'apc_ttl' => 10,
+    /**
+     * CSRF (Сross Site Request Forgery) protection mode
+     * http://en.wikipedia.org/wiki/Cross-site_request_forgery
+     *
+     * post - will not start session if (request method is POST and (HTTP_REFERER is empty or host names don't match))
+     * get - (recommended) affects any request method but allows empty HTTP_REFERER
+     * off - turns csrf protection off (NOT RECOMMENDED)
+     */
+    'csrf_protection_mode' => 'get',
+    /**
+     * Set false if any subdomain is under control by not trusted 3rd party.
+     */
+    'csrf_allow_subdomains' => true,
+    /**
+     * The following setting will log all php notices and standard output, if only
+     * you don't call
+     * ...
+     * Helper::inhibitRendering($displayStdout = true)
+     * ...
+     * in action method.
+     */
+    'log_raw_output' => false,
+    /**
+     * Also log $_GET, $_POST, $_ENV variables
+     * and merged config array
+     */
+    'log_raw_output_env' => false,
+    /**
+     * COMPILECHECK_OFF
+     * COMPILECHECK_ON
+     *
+     * Documentation:
+     * http://www.smarty.net/docs/en/variable.compile.check.tpl
+     */
+    'smarty_compile_check' => 'COMPILECHECK_ON',
+    /**
+     * Will set ExecTime cookie (ms) for every request
+     */
+    'set_exec_time_cookie' => true,
+    /**
+     * MUST BE CHANGED FOR EVERY APPLICATION!
+     * Only letters and digits are allowed.
+     * Recommended length: 32-128 characters
+     */
+    'secret' => '1jfiqreo85i9a7rq1azty6054k1rpvq7',
+    /**
+     * List all headers that should be sent by default for all requests.
+     * Modules can overwrite these headers.
+     */
+    'headers' => array(
+        'Content-Type: text/html; charset=UTF-8'
+    ),
+    /**
+     * Do not add trailing slash.
+     */
+    'path'   => array(
+        'config'    => __ROOT__ . '/config',
+        'data'      => __ROOT__ . '/data',
+        'cache'     => __ROOT__ . '/data/cache',
+        'log'       => __ROOT__ . '/data/log',
+        'module'    => __ROOT__ . '/module',
+        'public'    => __ROOT__ . '/public',
+        'template'  => __ROOT__ . '/template',
+        'vendor'    => __ROOT__ . '/vendor',
+    ),
+);

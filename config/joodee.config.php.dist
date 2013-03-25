@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * List user roles
+ */
+$roles = array(
+    'user'   => array(
+        'name' => 'User'
+    ),
+    'manager'   => array(
+        'name' => 'Manager'
+    ),
+    'admin'   => array(
+        'name' => 'Administrator'
+    ),
+    /**
+     * Uncomment demo roles for public demo projects
+     */
+//  'demo_user' => array(
+//      'name' => 'Demo User'
+//  ),
+//  'demo_manager' => array(
+//      'name' => 'Demo Manager'
+//  ),
+//  'demo_admin' => array(
+//      'name' => 'Demo Admin'
+//  ),
+);
+
+/**
+ * Role based access levels
+ */
+$access = array(
+    'user_level'    => array('user', 'manager', 'admin', 'demo_user', 'demo_manager', 'demo_admin'),
+    'manager_level' => array('manager', 'admin', 'demo_manager', 'demo_admin'),
+    'admin_level'   => array('admin', 'demo', 'demo_admin'),
+);
+
+$config = include 'bootstrap.config.php';
+
+$environment = array(
+    'global' => array(
+        'project_name' => 'Joodee Framework',
+        'company_name' => 'Joodee.org',
+        'company_website' => getenv('HTTP_HOST'),
+        'admin_name' => 'Administrator',
+        'admin_email' => 'admin@'.current(explode(':', getenv('HTTP_HOST'))),
+        'noreply_email' => 'noreply@'.current(explode(':', getenv('HTTP_HOST'))),
+        'mail_body_word_wrap' => 80,
+    ),
+    'ini_set' => array(
+/*
+        'display_errors'                  => true,
+        'error_reporting'                 => 2147483647,
+*/
+        'error_log'                       => $config['path']['data'].'/log/php_error.log',
+        'log_errors_max_len'              => 1024,
+
+        'date.timezone'                   => 'UTC',
+        'session.cookie_domain'           => current(explode(':', getenv('HTTP_HOST'))),
+        'session.cache_expire'            => 180,
+        'session.cache_limiter'           => 'nocache',
+        'session.cookie_httponly'         => false,
+        'session.cookie_path'             => '/',
+        'session.cookie_secure'           => false,
+        'session.cookie_lifetime'         => 60*60*24*7,
+        'session.gc_maxlifetime'          => 60*60*24*7,
+        'session.gc_divisor'              => 1000,
+        'session.gc_probability'          => 1,
+        'session.hash_bits_per_character' => 6,
+        'session.hash_function'           => 1,
+        'session.name'                    => 'sid',
+        'session.save_handler'            => 'files',
+        'session.save_path'               => $config['path']['data'].'/session',
+        'session.serialize_handler'       => 'php',
+        'session.use_cookies'             => true,
+        'session.use_only_cookies'        => true,
+        'session.use_trans_sid'           => 0,
+    ),
+    'module' => array(),
+);
+
+$events = array(
+    'onBeforeRun'               => array(),
+    'onAfterRun'                => array(),
+    'onBeforeActionCall'        => array(
+        /*
+         * Following example will call
+         * MyController::onBeforeActionCallEventHandler(array(1, 2, 3));
+         */
+        //array('class'=>'My', 'method'=>'onBeforeActionCall', 'argument' => array(1, 2, 3)),
+    ),
+    'onAfterActionCall'         => array(),
+    'onBeforeRendering'         => array(),
+    'onAfterRendering'          => array(),
+    'onBeforeWidgetRendering'   => array(),
+    'onAfterWidgetRendering'    => array()
+);
+
+return array(
+    'roles'         => &$roles,
+    'access'        => &$access,
+    'environment'   => &$environment,
+    'events'        => &$events,
+);

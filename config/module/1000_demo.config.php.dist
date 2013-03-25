@@ -1,0 +1,286 @@
+<?php
+
+$routes = array();
+
+$routes['/'] = array(
+    /**
+     * Action Example:
+     *
+     * class DemoController{
+     *      public static function indexAction(){}
+     * }
+     *
+     * Located in module/demo/DemoController.class.php
+     */
+    'action' => array(
+        /**
+         * All action calls are static:
+         *
+         * DemoController::indexAction();
+         *
+         * This action is allowed for public access
+         * because 'access' setting is not set,
+         * see explanation and examples below.
+         */
+        'class' => 'Demo',
+        'method' => 'fetchTemplate',
+        'argument' => 'page_home.tpl'
+    ),
+    /**
+     * Config template view.
+     * If not set or empty then view of parent route will be loaded.
+     * Required for root ['/'] route!
+     */
+    'view' => array(
+        /**
+         * View language (not required).
+         * Child routes extend this setting and can overwrite it.
+         * Can be used in templates to determine document language, e.g:
+         * <html lang="{$route.view.lang_iso2}">
+         */
+        'lang_iso2' => 'en',
+        /**
+         * Default page title.
+         * Can be customized in controller this way:
+         * $route =& Locator::getRoute();
+         * $route['view']['title'] = 'Custom title';
+         */
+        'title' => 'Demo Project',
+        /**
+         * Path to main layout template.
+         * Child routes extend this setting and can overwrite it.
+         * Must be set for root ['/'] route!
+         */
+        'layout_template' => 'demo_project/frontend.tpl',
+        /**
+         * Path to module view assets (not required).
+         * Child routes extend this setting and can overwrite it.
+         * Can be used for multilanguage projects (e.g. '/en' ;)
+         */
+        'asset_path' => '/asset',
+        /**
+         * Widgets are simple controller actions with 'Widget' extension.
+         */
+        'widgets' => array(
+            /**
+             * Use Smarty "widgets" function in "layout" templates.
+             *
+             * Example: {widgets area="header" class="header-highlight"}
+             */
+            'header' => array(
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'fetch',
+                    'argument' => 'header.tpl',
+                    'alias' => 'default',
+                ),
+            ),
+            'sidebar_left'=>array(
+                /**
+                 * Following widget calls DemoController::sidebarWidget()
+                 */
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'sidebarLeft',
+                    /**
+                     * Widget alias is not required but if set then can be used
+                     * in 'filter' settings to filter it out in child routes.
+                     * See example below.
+                     */
+                    'alias' => 'sidebar_left',
+                    /**
+                     * Following setting is not required.
+                     * If set and not empty then hides this widget from all child routes.
+                     */
+                    'private' => false,
+                ),
+            ),
+            'sidebar_right'=>array(
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'sidebarRight',
+                    'alias' => 'sidebar_right',
+                ),
+            ),
+            'menu_top' => array(
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'fetch',
+                    'argument' => 'menu_top.tpl',
+                ),
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'userTopMenu',
+                    /**
+                     * Check access level list in joodee.config.php
+                     *
+                     * If access setting not set then execution is allowed for everyone.
+                     *
+                     * If set but empty then forbidden for all.
+                     *
+                     * Following example adds user_level access and removes
+                     * manager_level access. Meaning is to display widget to
+                     * user role only!
+                     *
+                     * Example: 'access' => array('user_level', '!manager_level'),
+                     */
+                    'access' => 'user_level',
+                    'alias' => 'menu_top_user',
+                ),
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'fetch',
+                    'argument' => 'menu_top_guest.tpl',
+                    'alias' => 'menu_top_guest',
+                ),
+            ),
+            'footer' => array(
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'fetch',
+                    'argument' => 'footer.tpl',
+                ),
+            ),
+        ),
+        'meta' => array(
+            array('name'=>'keywords', 'content'=>'', 'indent' => '  '),
+            array('name'=>'description', 'content'=>'', 'indent' => '  '),
+            array('name'=>'generator', 'content'=>'Joodee Framework', 'indent' => '  '),
+        ),
+        'links' => array(
+            array('type'=>'text/css', 'href'=>'/lib/bootstrap/css/bootstrap.min.css', 'rel'=>'stylesheet', 'order' => 10, 'indent' => '  '),
+            array('type'=>'text/css', 'href'=>'/lib/bootstrap/css/bootstrap-responsive.min.css', 'rel'=>'stylesheet', 'order' => 11, 'indent' => '  '),
+            array('type'=>'text/css', 'href'=>'/module/demo/css/layout.css', 'rel'=>'stylesheet', 'order' => 1000, 'indent' => '  '),
+            array('type'=>'text/css', 'href'=>'/module/demo/css/content.css', 'rel'=>'stylesheet', 'order' => 1010, 'indent' => '  '),
+        ),
+        'scripts' => array(
+            array('type' => 'text/javascript', 'src' => '/module/demo/js/demo.js', 'order' => 1000, 'indent' => '  '),
+            array('type' => 'text/javascript', 'src' => '/lib/bootstrap/js/bootstrap.min.js', 'order' => 10, 'indent' => '  '),
+        ),
+    ),
+);
+
+$routes['/']['account/'] = array(
+    'action' => array(
+        'class' => 'Demo',
+        'method' => 'userArea',
+        'access' => 'user_level',
+    ),
+);
+
+$routes['/']['admin/'] = array(
+    'action' => array(
+        'class' => 'DemoAdmin',
+        'method' => 'index',
+        'access' => 'manager_level',
+    ),
+    'view' => array(
+        'title' => 'Backend',
+        'layout_template' => 'demo_project/backend.tpl',
+        'widgets'    => array(
+            'backend_menu_top' => array(
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'fetch',
+                    'argument' => 'menu_top_backend.tpl',
+                ),
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'userTopMenu',
+                    'access' => 'user_level',
+                    'alias' => 'menu_top_user',
+                ),
+            ),
+            'backend_header' => array(
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'fetch',
+                    'argument' => 'header_backend.tpl',
+                ),
+            ),
+            'backend_sidebar_right' => array(
+                array(
+                    'class' => 'Demo',
+                    'method' => 'backendSidebar',
+                    'private' => true
+                ),
+            ),
+            'backend_footer' => array(
+                array(
+                    'class'  => 'Demo',
+                    'method' => 'fetch',
+                    'argument' => 'footer_backend.tpl',
+                ),
+            ),
+        ),
+        'meta' => array(
+            array('name' => 'robots', 'content' => 'noindex,nofollow', 'indent' => '  '),
+        ),
+    ),
+);
+
+$routes['/']['terms-of-service/'] = array(
+    'action' => array(
+        'class' => 'Demo',
+        'method' => 'fetchTemplate',
+        'argument' => 'page_terms_of_service.tpl',
+    ),
+    'view' => array(
+        'title' => 'Terms of Service',
+    ),
+);
+
+$routes['/']['privacy-policy/'] = array(
+    'action' => array(
+        'class' => 'Demo',
+        'method' => 'fetchTemplate',
+        'argument' => 'page_privacy_policy.tpl',
+    ),
+    'view' => array(
+        'title' => 'Privacy policy',
+    ),
+);
+
+$routes['/']['error/'] = array(
+    'action' => array(
+        'class' => 'Error',
+        'method' => 'index'
+    ),
+    'view'   => array(
+        'widgets' => array(),
+        'filter' => array(
+            'header' => array(
+                'default'
+            ),
+            'sidebar_left',
+            'sidebar_right',
+        ),
+    ),
+);
+
+return array(
+    /**
+     * You can add and override different roles right in module config files,
+     * all configs will be merged when cache is turned off or expired.
+     *
+     * Check initial roles in joodee.config.php
+     *
+     * Keep in mind that module load ordering is essential.
+     */
+    'roles'     => array(),
+    /**
+     * Add or override access levels if required.
+     */
+    'access'      => array(),
+    /**
+     * Add or override environment configuration.
+     * Write module prefixes to keep specific module configuration safe.
+     */
+    'environment' => array(),
+    'routes'      => $routes,
+    'events' => array(
+        'onBeforeActionCall' => array(
+            array('class'=>'Error', 'method' => 'onBeforeActionCallCheckDatabaseConnection'),
+        ),
+    ),
+);

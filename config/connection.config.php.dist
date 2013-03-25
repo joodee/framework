@@ -1,0 +1,42 @@
+<?php
+
+return array(
+    'connection' => array(
+        'adodb' => array(
+            'default' => array(
+                'debug'     => false,
+                'host'      => 'localhost',
+                'port'      => '3306',
+                'user'      => 'root',
+                'password'  => '',
+                'database'  => 'joodee_framework',
+                'driver'    => 'mysqlt',
+                'execute'   => array(
+                    'SET names "utf8"',
+                    'SET collation_connection="utf8_general_ci"',
+                    'SET collation_server="utf8_general_ci"',
+                    'SET character_set_client="utf8"',
+                    'SET character_set_connection="utf8"',
+                    'SET character_set_results="utf8"',
+                    'SET character_set_server="utf8"',
+                    'SET time_zone = "UTC"',
+                ),
+                'include'   => array(
+                    'adodb.inc.php',
+                    'adodb-errorhandler.inc.php',
+                    //'adodb-time.inc.php',
+                ),
+                'define'=>array(
+                    'ADODB_ERROR_LOG_TYPE' => 3,
+                    'ADODB_ERROR_LOG_DEST' => __ROOT__ . '/data/log/sql_error.log',
+                    /*
+                    'ADODB_ERROR_LOG_TYPE' => 1,
+                    'ADODB_ERROR_LOG_DEST' => 'error@'.current(explode(':', getenv('HTTP_HOST'))),
+                    */
+                    'ADODB_ERROR_HANDLER_TYPE' => E_USER_WARNING,
+                    'ADODB_ERROR_HANDLER' => 'ADODB_Error_Handler',
+                ),
+            ),
+        ),
+    ),
+);

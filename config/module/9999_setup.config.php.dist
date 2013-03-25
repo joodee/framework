@@ -1,0 +1,33 @@
+<?php
+
+//return array();
+
+return array(
+    'routes' => array(
+        '/' => array(
+            'action' => array(
+                'class' => 'Setup',
+                'method' => 'checkSettings',
+            ),
+            'view' => array(
+                'lang_iso2' => 'en',
+                'layout_template' => 'demo_project/frontend.tpl',
+                'title' => 'Joodee Framework - Setup',
+                'filter' => array(),
+                'meta' => array(
+                    array('name' => 'robots', 'content' => 'noindex,nofollow', 'indent' => '  '),
+                ),
+                'links' => array(
+                    array('type'=>'text/css', 'href'=>'/lib/bootstrap/css/bootstrap.min.css', 'rel'=>'stylesheet', 'order' => 10, 'indent' => '  '),
+                    array('type'=>'text/css', 'href'=>'/lib/bootstrap/css/bootstrap-responsive.min.css', 'rel'=>'stylesheet', 'order' => 11, 'indent' => '  '),
+                    array('type'=>'text/css', 'href'=>'/module/demo/css/layout.css', 'rel'=>'stylesheet', 'order' => 1000, 'indent' => '  '),
+                    array('type'=>'text/css', 'href'=>'/module/demo/css/content.css', 'rel'=>'stylesheet', 'order' => 1010, 'indent' => '  '),
+                ),
+                'scripts' => array(
+                    array('type' => 'text/javascript', 'src' => '/module/demo/js/demo.js', 'order' => 1000, 'indent' => '  '),
+                    array('type' => 'text/javascript', 'src' => '/lib/bootstrap/js/bootstrap.min.js', 'order' => 10, 'indent' => '  '),
+                ),
+            ),
+        ),
+    ),
+);

@@ -1,0 +1,11 @@
+<?php
+/**
+ * This is configuration file for your custom application.
+ */
+return array(
+    'roles'         => array(),
+    'access'        => array(),
+    'routes'        => array(),
+    'environment'   => array(),
+    'events'        => array(),
+);

@@ -1,0 +1,270 @@
+<?php
+
+$routes = array();
+
+/**
+ * Adds authentication form to hidden area of root route layout.
+ */
+$routes['/'] = array(
+    'view' => array(
+        'widgets' => array(
+            'hidden' => array(
+                array(
+                    'class' => 'AccountAuthentication',
+                    'method' => 'modalAuthForm',
+                ),
+            ),
+        ),
+        'links' => array(
+            array('type'=>'text/css', 'href'=>'/lib/jquery-ui/css/redmond/jquery-ui-1.10.2.custom.min.css', 'rel'=>'stylesheet', 'indent' => '  '),
+            array('type'=>'text/css', 'href'=>'/module/account/css/account.css', 'rel'=>'stylesheet', 'order' => 100, 'indent' => '  '),
+        ),
+        'scripts' => array(
+            array('type' => 'text/javascript', 'src' => '/lib/jquery-ui/js/jquery-ui-1.10.2.custom.min.js', 'indent' => '  '),
+            array('type' => 'text/javascript', 'src' => '/module/account/js/account.js', 'order' => 100, 'indent' => '  '),
+        )
+    ),
+);
+
+$routes['/']['profile/'] = array(
+    'action' => array(
+        'class' => 'AccountProfile',
+        'method' => 'edit',
+        'access' => 'user_level',
+    ),
+    'view' => array(
+        'title' => 'Your profile',
+    ),
+);
+
+$routes['/']['password/'] = array(
+    'action' => array(
+        'class' => 'AccountProfile',
+        'method' => 'changePassword',
+        'access' => 'user_level',
+    ),
+    'view' => array(
+        'title' => 'Change password',
+    ),
+);
+
+$routes['/']['login/'] = array(
+    'action' => array(
+        'class' => 'AccountAuthentication',
+        'method' => 'index',
+    ),
+    'view' => array(
+        'filter' => array(
+            'menu_top' => array(
+                'menu_top_guest',
+            ),
+            'header' => array(
+                'default'
+            ),
+            'sidebar_left',
+            'sidebar_right',
+        ),
+    ),
+);
+
+$routes['/']['logout/'] = array(
+    'action' => array(
+        'class' => 'AccountAuthentication',
+        'method' => 'logout',
+        'argument' => array(
+            'redirect' => '/',
+        ),
+    ),
+);
+
+$routes['/']['admin/'] = array(
+    'view' => array(
+        'scripts' => array(
+            array('type'=>'text/javascript', 'src'=>'/module/account/js/account_manager.js', 'order'=>110, 'indent'=>'  '),
+        ),
+    ),
+);
+
+$routes['/']['admin/']['accounts/'] = array(
+    'action' => array(
+        'class' => 'AccountManager',
+        'method' => 'list',
+        'access' => 'admin_level',
+    ),
+    'view' => array(
+        'widgets'    => array(
+            'backend_sidebar_right' => array(
+                array(
+                    'class' => 'AccountManager',
+                    'method' => 'sidebar',
+                    'private' => true
+                ),
+            ),
+        ),
+    ),
+);
+
+$routes['/']['admin/']['sendmail/'] = array(
+    'action' => array(
+        'class' => 'AccountManager',
+        'method' => 'ajaxSendMail',
+        'access' => 'manager_level',
+    ),
+);
+
+$routes['/']['registration/'] = array(
+    'action' => array(
+        'class' => 'AccountRegistration',
+        'method' => 'registration',
+        'argument' => array(
+            'activation_route' => '/activation/',
+        ),
+    ),
+);
+
+$routes['/']['activation/'] = array(
+    'action' => array(
+        'class' => 'AccountRegistration',
+        'method' => 'activation'
+    ),
+);
+
+$routes['/']['registration/']['captcha/'] = array(
+    'action' => array(
+        'class' => 'Captcha',
+        'method' => 'show',
+        'argument' => array(
+            'image_bg_color' => '#ffffff',
+            'text_color' => '#CD0000',
+            'line_color' => '#CD0000',
+            'background_directory' => dirname(__FILE__) . '/../../vendor/Securimage/backgrounds/',
+            'ttf_file' => dirname(__FILE__) . '/../../vendor/Securimage/AHGBold.ttf',
+            'perturbation' => 0.75,
+            'num_lines' => array(3, 5),
+            'image_width' => 218,
+            'image_height' => 60,
+            'charset' => 'ABCDEFGHKMNPRSTUVWYZabcdefghkmnprstuvwyz23456789',
+            'code_length' => array(4, 6),
+            //'image_signature' => 'signature',
+            //'signature_color' => '#CD0000',
+        )
+    ),
+    'view' => array(
+        'filter' => array()
+    )
+);
+
+$routes['/']['forgot/'] = array(
+    'action' => array(
+        'class' => 'AccountForgot',
+        'method' => 'forgot'
+    ),
+);
+
+$routes['/']['retrieve_username/'] = array(
+    'action' => array(
+        'class' => 'AccountForgot',
+        'method' => 'retrieveUsername'
+    ),
+);
+
+$routes['/']['reset_password/'] = array(
+    'action' => array(
+        'class' => 'AccountForgot',
+        'method' => 'resetPassword'
+    ),
+);
+
+return array(
+    'routes'    => $routes,
+    'environment' => array(
+        'module' =>array(
+            'account' => array(
+
+                'encryption_algorithm' => 'sha512',
+
+                'username_regexp' => '/^([0-9a-zA-Z\.\-]+)?$/',
+
+                'registration_role_default' => 'user',
+
+                /**
+                 * Set false to turn off first account checking or registration.
+                 */
+                'registration_role_first_account' => 'admin',
+
+                'secure_authentication' => false,
+
+                'authentication_success_redirect' => array(
+                    'default' => '/',
+                    'user' => '/account/',
+                    'manager' => '/account/',
+                    'admin' => '/admin/'
+                ),
+                /**
+                 * If false then users will not be able to sign in while account
+                 * is not activated, activation link will be sent by email.
+                 * This feature useful to prevent unlimited account registrations.
+                 */
+                'activate_accounts_automatically' => false,
+                /**
+                 * If automatic account activation turned off (false) then automatic
+                 * authentication will take effect after successful account activation.
+                 */
+                'automatic_authentication' => true,
+                /**
+                 * Welcome email can be sent if only automatic account activation
+                 * turned on (true), otherwise it will send activation email.
+                 */
+                'welcome_email_required' => true,
+                /**
+                 * Following setting enables physical deletion from database
+                 * account table for accounts that were not activated within
+                 * set amount of days.
+                 *
+                 * Disabled if empty.
+                 */
+                'schedule_deletion_if_not_activated_x_days' => 3,
+                /**
+                 * TODO Inactive account deletion, not implemented yet
+                 * Following setting schedules account deletion (by cron)
+                 * if he/she was inactive for set amount of days.
+                 *
+                 * Account notification will be sent by email.
+                 *
+                 * Disabled if empty.
+                 */
+                'schedule_deletion_if_inactive_x_days' => 0,
+                /**
+                 * Following setting allows account deletion (by cron)
+                 * if deletion scheduled during set amount of days.
+                 */
+                'delete_if_scheduled_x_days' => 15,
+                /**
+                 * Following setting allows deletion from database, account table.
+                 *
+                 * If empty then records will be marked as deleted but will never
+                 * be deleted physically.
+                 *
+                 * Note!
+                 * It works for manual deletion from backend without deletion schedule.
+                 */
+                'delete_accounts_physically' => false,
+                /**
+                 * Following setting allows deletion from database, account table.
+                 *
+                 * If empty then records will be marked as deleted but will never
+                 * be deleted physically.
+                 *
+                 * Note!
+                 * It works for scheduled deletion by cron job only.
+                 */
+                'delete_expired_accounts_physically' => true,
+            ),
+        ),
+    ),
+    'events' => array(
+        'onBeforeActionCall' => array(
+            array('class'=>'Account', 'method'=>'checkAccount'),
+        ),
+    ),
+);

@@ -1,0 +1,64 @@
+h1{
+  font-size: 36px;
+}
+h2{
+  font-size: 28px;
+  line-height: 36px;
+}
+h3{
+  font-size: 24px;
+  line-height: 28px;
+}
+
+textarea{
+  resize: none;
+}
+
+#header h1 {
+  font-size: 50px;
+  font-weight: bold;
+  line-height: 1;
+}
+#header p {
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+input.datepicker{
+  cursor: pointer;
+  background: url("../images/icon-input-calendar.gif") right center no-repeat;
+}
+
+.page-header{
+  padding-bottom: 2px;
+}
+
+.content-background{
+  background: #efefef url("/module/demo/images/background-transparent.png");
+}
+
+#sticky_footer {
+  background-color: #333;
+  color: #333 !important;
+}
+.footer-decoration-top{
+  height: 2px;
+  background-color: #777;
+}
+.footer-decoration-bottom{
+  height: 20px;
+}
+#sticky_footer .credit {
+  margin: 20px 0;
+  line-height: 16px;
+}
+#sticky_footer h5{
+  margin: 5px 0;
+}
+#sticky_footer a,
+#sticky_footer a:hover{
+  color: #999;
+}
+

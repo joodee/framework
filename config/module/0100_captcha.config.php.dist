@@ -1,0 +1,39 @@
+<?php
+
+$routes = array();
+
+$routes['/']['captcha/'] = array(
+    'action' => array(
+        'class' => 'Captcha',
+        'method' => 'show',
+        'argument' => array(
+            'image_bg_color' => '#ffffff',
+            'text_color' => '#CD0000',
+            'line_color' => '#CD0000',
+            'background_directory' => dirname(__FILE__) . '/../../vendor/Securimage/backgrounds/',
+            'ttf_file' => dirname(__FILE__) . '/../../vendor/Securimage/AHGBold.ttf',
+            'perturbation' => 0.75,
+            'num_lines' => array(3, 5),
+            'image_width' => 218,
+            'image_height' => 60,
+            'charset' => 'ABCDEFGHKMNPRSTUVWYZabcdefghkmnprstuvwyz23456789',
+            'code_length' => array(4, 6),
+            //'image_signature' => 'signature',
+            //'signature_color' => '#CD0000',
+        )
+    ),
+    'view' => array(
+        'filter' => array()
+    )
+);
+
+$routes['/']['captcha/']['play/'] = array(
+    'action' => array(
+        'class' => 'Captcha',
+        'method' => 'play',
+    )
+);
+
+return array(
+    'routes' => $routes
+);
