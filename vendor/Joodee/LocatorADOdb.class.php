@@ -77,7 +77,25 @@ class LocatorADOdb{
         return self::$instance[$alias];
     }
 
+    public static function instanceExists($alias){
 
+        if(isset(self::$instance[$alias])){
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function destroyInstance($alias){
+
+        if(isset(self::$instance[$alias])){
+
+            self::$instance[$alias]->Disconnect();
+        }
+
+        return true;
+    }
 
     private function __construct() {}
 
