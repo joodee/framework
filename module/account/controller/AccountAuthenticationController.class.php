@@ -124,7 +124,7 @@ class AccountAuthenticationController{
         return Locator::getSmarty()->fetch('login_modal.tpl');
     }
 
-    public static function logoutAction($args){
+    public static function logoutAction($args = array()){
 
         if(!empty($_SESSION['logout_redirect'])){
 

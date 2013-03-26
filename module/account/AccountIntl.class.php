@@ -84,8 +84,8 @@ class AccountIntl{
 
     public static $reg_activation_code_sent = "Activation code has been sent to specified email address, please check your email.";
 
-    public static $activation_success_title = "Welcome on board!";
-    public static $activation_success_message = "Your account has been successfully confirmed.";
+    public static $activation_success_title = "Welcome aboard!";
+    public static $activation_success_message = "Your account has been successfully activated.";
 
     public static $plain_body_use_html_compatible_email_client = "To view the message, please use an HTML compatible email viewer!";
 
