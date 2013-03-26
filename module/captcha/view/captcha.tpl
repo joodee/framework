@@ -6,7 +6,7 @@
     <input type="hidden" name="hash" value="{$captchaNamespaceHash}" />
     <span class="help-block">Type characters in the picture above</span>
     <div class="input-prepend input-append">
-      <span class="add-on btn pull-left"onclick="document.getElementById('captcha_{$captchaNamespace}').src = '/captcha/?namespace={$captchaNamespace}&hash={$captchaNamespaceHash}&nocache=' + Math.random(); this.blur();" title="Reload Image"><i class="icon-refresh"></i></span>
+      <span class="add-on btn pull-left" onclick="document.getElementById('captcha_{$captchaNamespace}').src = '/captcha/?namespace={$captchaNamespace}&hash={$captchaNamespaceHash}&nocache=' + Math.random(); this.blur();" title="Reload Image"><i class="icon-refresh"></i></span>
       <span class="add-on btn pull-left">
         <object tabindex="-1" width="18" height="18" data="/module/captcha/securimage_play.swf?icon_file=/module/captcha/images/audio_icon.png&amp;audio_file=/captcha/play/{$captchaNamespace}/{$captchaNamespaceHash}/" type="application/x-shockwave-flash">
           <param name="wmode" value="transparent" />

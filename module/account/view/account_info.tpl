@@ -68,10 +68,12 @@
       <th>Last signed in</th>
       <td>{$account.last_logged_at|default:'&nbsp;'}</td>
     </tr>
+{if !Helper::isDemoRole()}
     <tr>
       <th>Last logged IP</th>
       <td>{$account.last_logged_ip|default:'&nbsp;'}</td>
     </tr>
+{/if}
     <tr>
       <th>Password requested</th>
       <td>{$account.password_requested_at|default:'&nbsp;'}</td>

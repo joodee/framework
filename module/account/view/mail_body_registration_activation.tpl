@@ -31,7 +31,7 @@
 <p>
   If you didn't register with <a href="http://{$smarty.server.HTTP_HOST}">{$smarty.server.HTTP_HOST}</a> then
   someone else may type in your email address by accident. If that is what happened, then ignore this
-  letter{if $__config.environment.module.account.schedule_deletion_if_not_activated_x_days} and your email address will be scheduled for deletion from our database automatically within {$__config.environment.module.account.delete_if_not_activated_for_x_days*24} hours{/if}.
+  letter{if $__config.environment.module.account.schedule_deletion_if_not_activated_x_days} and your email address will be scheduled for deletion from our database automatically within {$__config.environment.module.account.delete_if_not_activated_x_days*24} hours{/if}.
 </p>
 </div>
 <div style="background-color:#cbcfd6;padding: 10px 20px;">
