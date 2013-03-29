@@ -44,8 +44,8 @@ $environment = array(
         'company_name' => 'Joodee.org',
         'company_website' => getenv('HTTP_HOST'),
         'admin_name' => 'Administrator',
-        'admin_email' => 'admin@'.current(explode(':', getenv('HTTP_HOST'))),
-        'noreply_email' => 'noreply@'.current(explode(':', getenv('HTTP_HOST'))),
+        'admin_email' => 'admin@'.str_replace('www.', '', preg_replace('/:.*$/', '', getenv('HTTP_HOST'))),
+        'noreply_email' => 'noreply@'.str_replace('www.', '', preg_replace('/:.*$/', '', getenv('HTTP_HOST'))),
         'mail_body_word_wrap' => 80,
     ),
     'ini_set' => array(
@@ -57,7 +57,7 @@ $environment = array(
         'log_errors_max_len'              => 1024,
 
         'date.timezone'                   => 'UTC',
-        'session.cookie_domain'           => current(explode(':', getenv('HTTP_HOST'))),
+        'session.cookie_domain'           => preg_replace('/:.*$/', '', getenv('HTTP_HOST')),
         'session.cache_expire'            => 180,
         'session.cache_limiter'           => 'nocache',
         'session.cookie_httponly'         => false,
