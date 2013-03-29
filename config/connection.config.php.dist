@@ -31,7 +31,7 @@ return array(
                     'ADODB_ERROR_LOG_DEST' => __ROOT__ . '/data/log/sql_error.log',
                     /*
                     'ADODB_ERROR_LOG_TYPE' => 1,
-                    'ADODB_ERROR_LOG_DEST' => 'error@'.current(explode(':', getenv('HTTP_HOST'))),
+                    'ADODB_ERROR_LOG_DEST' => 'error@'.str_replace('www.', '', preg_replace('/:.*$/', '', getenv('HTTP_HOST'))),
                     */
                     'ADODB_ERROR_HANDLER_TYPE' => E_USER_WARNING,
                     'ADODB_ERROR_HANDLER' => 'ADODB_Error_Handler',
