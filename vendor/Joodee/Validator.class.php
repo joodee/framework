@@ -426,7 +426,7 @@ class Validator{
 
         if(!isset($args[0]) || !is_numeric($args[0])){
 
-            return "Invalid rule, valid example: 'min|2'";
+            return "Invalid rule, valid example: 'max|2'";
         }
 
         if(!is_string($data[$fieldName])){
@@ -449,7 +449,7 @@ class Validator{
             return '';
         }
 
-        if($data[$fieldName] >= $args[0]){
+        if($data[$fieldName] <= $args[0]){
 
             return '';
         }

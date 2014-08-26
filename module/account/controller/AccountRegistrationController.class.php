@@ -59,24 +59,12 @@ class AccountRegistrationController{
                     'required' => AccountIntl::$validation_confirm_password_required,
                     'equals|password' => AccountIntl::$validation_passwords_dont_match,
                 ),
-                'birthday_day' => array(
+                'birthday' => array(
                     'required' => AccountIntl::$validation_birthday_date_required,
-                    'number' => AccountIntl::$validation_birthday_date_not_valid,
-                    'range|1:31' => AccountIntl::$validation_birthday_date_not_valid,
-                ),
-                'birthday_month' => array(
-                    'required' => AccountIntl::$validation_birthday_month_required,
-                    'number' => AccountIntl::$validation_birthday_month_not_valid,
-                    'range|1:12' => AccountIntl::$validation_birthday_month_not_valid,
-                ),
-                'birthday_year' => array(
-                    'required' => AccountIntl::$validation_birthday_year_required,
-                    'number' => AccountIntl::$validation_birthday_year_not_valid,
-                    'range|'.(date('Y')-120).':'.date('Y') => AccountIntl::$validation_birthday_year_not_valid,
                 ),
                 'gender' => array(
                     'required' => AccountIntl::$validation_gender_required,
-                    'in|Male,Female,Other' => AccountIntl::$validation_gender_not_in_list,
+                    'in|Male,Female' => AccountIntl::$validation_gender_not_in_list,
                 ),
                 'mobile_phone' => array(
                     'required' => AccountIntl::$validation_mobile_phone_required,
@@ -121,6 +109,17 @@ class AccountRegistrationController{
                 }
             }
 
+            $birthday = date_parse($_POST['birthday']);
+
+            if(empty($errors['birthday'])){
+
+                if(!empty($birthday['error_count'])
+                        || empty($birthday['year']) || $birthday['year']>=date('Y') || $birthday['year']<date('Y')-120){
+
+                    $errors['birthday'] = AccountIntl::$validation_birthday_date_not_valid;
+                }
+            }
+
             if(empty($errors['email'])){
 
                 $found = AccountModel::getAccountByEmail($_POST['email'], false);
@@ -154,6 +153,7 @@ class AccountRegistrationController{
                 $account = $_POST;
 
                 $account['nickname'] = $account['first_name'];
+                $account['birthday'] = $birthday['year'].'-'.sprintf('%02d', $birthday['month']).'-'.sprintf('%02d', $birthday['day']);
                 $account['email_canonical'] = $account['email'];
                 $account['algorithm'] = $config['environment']['module']['account']['encryption_algorithm'];
                 $account['salt'] = md5(mt_rand(1, mt_getrandmax()).$config['secret']);
@@ -204,6 +204,7 @@ class AccountRegistrationController{
                         if($config['environment']['module']['account']['welcome_email_required']){
 
                             $mail = new PHPMailer();
+                            $mail->CharSet='utf-8';
                             $mail->AddAddress($account['email'], $account['first_name'].' '.$account['last_name']);
                             $mail->SetFrom($config['environment']['global']['noreply_email'], $config['environment']['global']['company_name']);
                             $mail->Subject = str_replace('{company_name}', $config['environment']['global']['company_name'], AccountIntl::$reg_mail_subject_welcome);
@@ -238,7 +239,7 @@ class AccountRegistrationController{
                             AccountModel::deleteAccount($accId, $config['environment']['module']['account']['delete_accounts_physically']);
                             Alert::addAlert(AccountIntl::$reg_unable_to_send_email, 'error', AccountIntl::$reg_following_errors_occurred);
 
-                            return Locator::getSmarty()->fetch('registration.tpl');
+                            return Locator::getSmarty()->fetch('page_registration.tpl');
                         }
                     }
                     else{
@@ -251,6 +252,7 @@ class AccountRegistrationController{
                         Locator::getSmarty()->assign('activation_url', $activationUrl.$accId.'/'.$activationCode.'/');
 
                         $mail = new PHPMailer();
+                        $mail->CharSet='utf-8';
                         $mail->AddAddress($account['email'], $account['first_name'].' '.$account['last_name']);
                         $mail->SetFrom($config['environment']['global']['noreply_email'], $config['environment']['global']['company_name']);
                         $mail->Subject = str_replace('{company_name}', $config['environment']['global']['company_name'], AccountIntl::$reg_mail_subject_activate_account);
@@ -284,7 +286,7 @@ class AccountRegistrationController{
             }
         }
 
-        return Locator::getSmarty()->fetch('registration.tpl');
+        return Locator::getSmarty()->fetch('page_registration.tpl');
     }
 
     public static function activationAction(){
@@ -349,6 +351,7 @@ class AccountRegistrationController{
                                     Locator::getSmarty()->assign('account', $account);
 
                                     $mail = new PHPMailer();
+                                    $mail->CharSet='utf-8';
                                     $mail->AddAddress($account['email'], $account['first_name'].' '.$account['last_name']);
                                     $mail->SetFrom($config['environment']['global']['noreply_email'], $config['environment']['global']['company_name']);
                                     $mail->Subject = str_replace('{company_name}', $config['environment']['global']['company_name'], AccountIntl::$reg_mail_subject_welcome);
@@ -410,6 +413,6 @@ class AccountRegistrationController{
 
         Locator::getSmarty()->assign('activation_errors', $errors);
 
-        return Locator::getSmarty()->fetch('activation.tpl');
+        return Locator::getSmarty()->fetch('page_activation.tpl');
     }
 }

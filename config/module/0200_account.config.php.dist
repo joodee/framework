@@ -55,12 +55,6 @@ $routes['/']['login/'] = array(
     ),
     'view' => array(
         'filter' => array(
-            'menu_top' => array(
-                'menu_top_guest',
-            ),
-            'header' => array(
-                'default'
-            ),
             'sidebar_left',
             'sidebar_right',
         ),
@@ -93,10 +87,10 @@ $routes['/']['admin/']['accounts/'] = array(
     ),
     'view' => array(
         'widgets'    => array(
-            'backend_sidebar_right' => array(
+            'account_filter' => array(
                 array(
                     'class' => 'AccountManager',
-                    'method' => 'sidebar',
+                    'method' => 'filter',
                     'private' => true
                 ),
             ),

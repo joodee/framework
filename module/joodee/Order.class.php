@@ -21,7 +21,7 @@
  */
 class Order {
 
-    public static function link($alias, $name, $direction = 'asc', $linkClass = null, $iconClassAsc = 'icon-chevron-up', $iconClassDesc = 'icon-chevron-down'){
+    public static function link($alias, $name, $direction = 'asc', $linkClass = null, $iconClassAsc = 'glyphicon glyphicon-chevron-up', $iconClassDesc = 'glyphicon glyphicon-chevron-down'){
 
         $route =& Locator::getRoute();
 

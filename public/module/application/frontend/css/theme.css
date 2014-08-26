@@ -1,0 +1,10 @@
+.error-block{
+  display: block;
+}
+.form-control{
+  border-radius: 0;
+}
+.form-control:focus{
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}

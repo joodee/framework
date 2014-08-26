@@ -65,24 +65,12 @@ class AccountProfileController{
                     'required' => AccountIntl::$validation_last_name_required,
                     'length_max|32' => AccountIntl::$validation_last_name_length_max,
                 ),
-                'birthday_day' => array(
+                'birthday' => array(
                     'required' => AccountIntl::$validation_birthday_date_required,
-                    'number' => AccountIntl::$validation_birthday_date_not_valid,
-                    'range|1:31' => AccountIntl::$validation_birthday_date_not_valid,
-                ),
-                'birthday_month' => array(
-                    'required' => AccountIntl::$validation_birthday_month_required,
-                    'number' => AccountIntl::$validation_birthday_month_not_valid,
-                    'range|1:12' => AccountIntl::$validation_birthday_month_not_valid,
-                ),
-                'birthday_year' => array(
-                    'required' => AccountIntl::$validation_birthday_year_required,
-                    'number' => AccountIntl::$validation_birthday_year_not_valid,
-                    'range|'.(date('Y')-120).':'.date('Y') => AccountIntl::$validation_birthday_year_not_valid,
                 ),
                 'gender' => array(
                     'required' => AccountIntl::$validation_gender_required,
-                    'in|Male,Female,Other' => AccountIntl::$validation_gender_not_in_list,
+                    'in|Male,Female' => AccountIntl::$validation_gender_not_in_list,
                 ),
                 'mobile_phone' => array(
                     'required' => AccountIntl::$validation_mobile_phone_required,
@@ -110,6 +98,17 @@ class AccountProfileController{
             if(!Validator::check($_POST, $rules)){
 
                 $errors = array_merge($errors, Validator::getErrors());
+            }
+
+            $birthday = date_parse($_POST['birthday']);
+
+            if(empty($errors['birthday'])){
+
+                if(!empty($birthday['error_count'])
+                        || empty($birthday['year']) || $birthday['year']>=date('Y') || $birthday['year']<date('Y')-120){
+
+                    $errors['birthday'] = AccountIntl::$validation_birthday_date_not_valid;
+                }
             }
 
             if(empty($errors['email'])){
@@ -158,7 +157,7 @@ class AccountProfileController{
                     $_POST['timezone'] = $_POST['timezone_area'].'/'.$_POST['timezone_value'];
                 }
 
-                $_POST['birthday'] = $_POST['birthday_year'].'-'.sprintf('%02d', $_POST['birthday_month']).'-'.sprintf('%02d', $_POST['birthday_day']);
+                $_POST['birthday'] = $birthday['year'].'-'.sprintf('%02d', $birthday['month']).'-'.sprintf('%02d', $birthday['day']);
 
                 $updated = AccountProfileModel::updateProfile($_POST, $_SESSION['account']['id']);
 
@@ -167,10 +166,6 @@ class AccountProfileController{
                     Alert::addAlert(AccountIntl::$profile_updated_successfully_message, 'success', AccountIntl::$profile_updated_successfully_title);
 
                     $profile = AccountModel::getAccount($_SESSION['account']['id'], true, false);
-
-                    $profile['birthday_day'] = substr($profile['birthday'], 8, 2);
-                    $profile['birthday_month'] = substr($profile['birthday'], 5, 2);
-                    $profile['birthday_year'] = substr($profile['birthday'], 0, 4);
 
                     $timeZone = explode('/', $profile['timezone']);
 
@@ -206,7 +201,7 @@ class AccountProfileController{
 
         Locator::getSmarty()->assignByRef('profile', $profile);
 
-        return Locator::getSmarty()->fetch('account_profile.tpl');
+        return Locator::getSmarty()->fetch('page_profile.tpl');
     }
 
     public static function changePasswordAction(){
@@ -266,6 +261,7 @@ class AccountProfileController{
                     Locator::getSmarty()->assign('account', $account);
 
                     $mail = new PHPMailer();
+                    $mail->CharSet='utf-8';
                     $mail->AddAddress($account['email'], $account['first_name'].' '.$account['last_name']);
                     $mail->SetFrom($config['environment']['global']['noreply_email'], $config['environment']['global']['company_name']);
                     $mail->Subject    = AccountIntl::$change_password_success_mail_subject;
@@ -291,6 +287,6 @@ class AccountProfileController{
 
         Locator::getSmarty()->assign('change_password_errors', $errors);
 
-        return Locator::getSmarty()->fetch('password_change.tpl');
+        return Locator::getSmarty()->fetch('page_password_change.tpl');
     }
 }

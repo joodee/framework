@@ -23,7 +23,7 @@ class AccountForgotController{
 
     public static function forgotAction(){
 
-        return Locator::getSmarty()->fetch('forgot.tpl');
+        return Locator::getSmarty()->fetch('page_forgot.tpl');
     }
 
     public static function retrieveUsernameAction(){
@@ -74,6 +74,7 @@ class AccountForgotController{
                     $config =& Locator::getConfig();
 
                     $mail = new PHPMailer();
+                    $mail->CharSet='utf-8';
                     $mail->AddAddress($_POST['email'], $account['first_name'].' '.$account['last_name']);
                     $mail->SetFrom($config['environment']['global']['noreply_email'], $config['environment']['global']['company_name']);
                     $mail->Subject    = AccountIntl::$retrieve_username_mail_subject;
@@ -99,7 +100,7 @@ class AccountForgotController{
 
         Locator::getSmarty()->assign('retrieve_errors', $errors);
 
-        return Locator::getSmarty()->fetch('retrieve_username.tpl');
+        return Locator::getSmarty()->fetch('page_retrieve_username.tpl');
     }
 
     public static function resetPasswordAction(){
@@ -180,6 +181,7 @@ class AccountForgotController{
                     Locator::getSmarty()->assign('confirmation_url', $confirmationUrl);
 
                     $mail = new PHPMailer();
+                    $mail->CharSet='utf-8';
                     $mail->AddAddress($account['email'], $account['first_name'].' '.$account['last_name']);
                     $mail->SetFrom($config['environment']['global']['noreply_email'], $config['environment']['global']['company_name']);
                     $mail->Subject    = AccountIntl::$reset_password_mail_subject;
@@ -199,7 +201,7 @@ class AccountForgotController{
 
         Locator::getSmarty()->assign('reset_errors', $errors);
 
-        return Locator::getSmarty()->fetch('password_reset_request.tpl');
+        return Locator::getSmarty()->fetch('page_password_reset_request.tpl');
     }
 
     private static function resetForm($account){
@@ -237,6 +239,7 @@ class AccountForgotController{
                     $config =& Locator::getConfig();
 
                     $mail = new PHPMailer();
+                    $mail->CharSet='utf-8';
                     $mail->AddAddress($account['email'], $account['first_name'].' '.$account['last_name']);
                     $mail->SetFrom($config['environment']['global']['noreply_email'], $config['environment']['global']['company_name']);
                     $mail->Subject    = AccountIntl::$reset_password_success_mail_subject;
@@ -265,6 +268,6 @@ class AccountForgotController{
 
         Locator::getSmarty()->assign('reset_errors', $errors);
 
-        return Locator::getSmarty()->fetch('password_reset_form.tpl');
+        return Locator::getSmarty()->fetch('page_password_reset_form.tpl');
     }
 }

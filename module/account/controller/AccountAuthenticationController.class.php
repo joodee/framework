@@ -112,7 +112,7 @@ class AccountAuthenticationController{
 
         Locator::getSmarty()->assign('authFailCount', $authFailCount);
 
-        return Locator::getSmarty()->fetch('login.tpl');
+        return Locator::getSmarty()->fetch('page_authentication.tpl');
     }
 
     public static function modalAuthFormWidget(){
@@ -121,7 +121,7 @@ class AccountAuthenticationController{
 
         Locator::getSmarty()->assign('authFailCount', $authFailCount);
 
-        return Locator::getSmarty()->fetch('login_modal.tpl');
+        return Locator::getSmarty()->fetch('widget_authentication_modal.tpl');
     }
 
     public static function logoutAction($args = array()){

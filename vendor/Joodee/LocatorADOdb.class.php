@@ -55,7 +55,16 @@ class LocatorADOdb{
             }
 
             self::$instance[$alias] = ADONewConnection($connection['driver']);
-            self::$instance[$alias]->Connect($connection['host'], $connection['user'], $connection['password']);
+
+            if(empty($connection['persistent'])){
+
+                self::$instance[$alias]->Connect($connection['host'], $connection['user'], $connection['password']);
+            }
+            else{
+
+                self::$instance[$alias]->PConnect($connection['host'], $connection['user'], $connection['password']);
+            }
+
             self::$instance[$alias]->Execute("USE `{$connection['database']}`");
 
             if(isset($connection['debug'])){

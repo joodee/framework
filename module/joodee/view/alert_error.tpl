@@ -1,4 +1,4 @@
-<div class="alert alert-error">
+<div class="alert alert-danger">
   <div class="alert-error-decoration"></div>
   <a data-dismiss="alert" class="close">&times;</a>
   {if $alertTitle}<h3>{$alertTitle}</h3>{/if}

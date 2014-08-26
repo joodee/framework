@@ -37,10 +37,6 @@ class AccountIntl{
     public static $validation_username_taken = "This username is already taken.";
     public static $validation_birthday_date_required = "Birthday date required.";
     public static $validation_birthday_date_not_valid = "Birthday date is not valid.";
-    public static $validation_birthday_month_required = "Birthday month required.";
-    public static $validation_birthday_month_not_valid = "Birthday month is not valid.";
-    public static $validation_birthday_year_required = "Birthday year required.";
-    public static $validation_birthday_year_not_valid = "Birthday year is not valid.";
     public static $validation_gender_required = "Gender required.";
     public static $validation_gender_not_in_list = "Submitted gender value not in list";
     public static $validation_mobile_phone_required = "Mobile phone required.";
