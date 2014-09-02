@@ -2,10 +2,10 @@
 /**
  * Class Helper
  *
- * Joodee Framework v1.0 - http://www.joodee.org
+ * Joodee Framework v1.1 - http://www.joodee.org
  * ==========================================================
  *
- * Copyright 2012-2013 Alexandr Zincenco <alex@joodee.org>
+ * Copyright 2012-2014 Alexandr Zincenco <alex@joodee.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,25 +61,6 @@ class Helper{
         }
 
         return false;
-    }
-
-    public static function debug($var, $ip='127.0.0.1'){
-
-        if(is_string($ip)){
-
-            $ip = array($ip);
-        }
-
-        if(!is_array($ip) || !in_array(getenv('REMOTE_ADDR'), $ip)){
-
-            return;
-        }
-
-        $output = '<pre class="helper-debug">';
-        $output .= var_export($var, true);
-        $output .= '</pre>';
-
-        echo $output;
     }
 
     public static function &order($array, $by, $direction='asc', $default=null) {

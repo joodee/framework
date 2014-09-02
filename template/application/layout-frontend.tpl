@@ -27,6 +27,7 @@
 
   <div class="container">
     {Alert::fetchAll()}
+    {*widgets area="sidebar_left"*}
     {$controller_output}
     {widgets area="below_controller"}
   </div><!-- /.container -->

@@ -2,10 +2,10 @@
 /**
  * Class Joodee
  *
- * Joodee Framework v1.0 - http://www.joodee.org
+ * Joodee Framework v1.1 - http://www.joodee.org
  * ==========================================================
  *
- * Copyright 2012-2013 Alexandr Zincenco <alex@joodee.org>
+ * Copyright 2012-2014 Alexandr Zincenco <alex@joodee.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -686,16 +686,12 @@ class Joodee{
 
             if(self::$rawOutput !== '' || !empty(self::$widgetRawOutput)){
 
-                echo '<pre>';
-
-                echo self::$rawOutput;
+                FB::error(self::$rawOutput);
 
                 if(!empty(self::$widgetRawOutput)){
 
-                    var_export(self::$widgetRawOutput, false);
+                    FB::error(self::$widgetRawOutput);
                 }
-
-                echo '</pre>';
             }
         }
     }

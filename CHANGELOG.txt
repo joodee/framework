@@ -1,3 +1,11 @@
+Joodee Framework v1.1 - 2013-03-24
+--------------------------------------------
+- Twitter Bootstrap updated to v3.2
+- Application skeleton added
+- Demo application removed
+- Smarty updated to v3.1.19
+- FirePHP logging library added
+
 
 Joodee Framework v1.0 - 2013-03-24
 --------------------------------------------

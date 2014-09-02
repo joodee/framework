@@ -1,10 +1,10 @@
-Joodee Framework v1.0
-Copyright 2012-2013 Alexandr Zincenco <alex@joodee.org>
+Joodee Framework v1.1
+Copyright 2012-2014 Alexandr Zincenco <alex@joodee.org>
 
 
 This product contains the Smarty library
 licensed under the LGPL license.
-Copyright 2002-2013 New Digital Group, Inc.
+Copyright 2002-2014 New Digital Group, Inc.
 
 This product contains the ADOdb library
 dual licensed using BSD and LGPL.
@@ -21,20 +21,35 @@ Copyright 2012 Drew Phillips
 
 This product contains the Twitter Bootstrap library
 licensed under Apache License, Version 2.0
-Copyright 2012 Twitter, Inc.
+Copyright 2014 Twitter, Inc.
 
 This product contains the jQuery library
 licensed under the MIT license.
-Copyright 2005, 2012 jQuery Foundation, Inc. and other contributors.
+Copyright 2005, 2014 jQuery Foundation, Inc. and other contributors.
 
 This product contains the jQuery UI library
 licensed under the MIT license.
-Copyright 2013 jQuery Foundation and other contributors.
+Copyright 2014 jQuery Foundation and other contributors.
 
 This product contains the jQuery plugin Validation
 licensed under the MIT license.
-Copyright (c) 2013 Jörn Zaefferer
+Copyright (c) 2014 Jörn Zaefferer
 
 This product contains the HTML5 Shiv library
 dual licensed under the MIT or GPL Version 2 licenses
 https://github.com/aFarkas/html5shiv
+
+This product contains Bootstrap 3 HTML themes
+licensed under Apache License, Version 2.0
+Copyright (c) 2014 Iron Summit Media Strategies
+http://startbootstrap.com/
+
+This product contains "Font Awesome" iconic font and CSS toolkit
+licensed under SIL OFL 1.1 (font) & MIT License (CSS)
+Copyright (c) Dave Gandy - http://fontawesome.io
+http://startbootstrap.com/
+
+This product contains FirePHPCore library
+licensed under the MIT license.
+Copyright (c) 2007+ Christoph Dorn
+http://www.christophdorn.com/
