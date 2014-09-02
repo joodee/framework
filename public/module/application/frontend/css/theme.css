@@ -8,3 +8,43 @@
   -webkit-box-shadow: none;
           box-shadow: none;
 }
+
+.well{
+  background-color: #ffffff;
+}
+.modal-header h3{
+  margin: 0;
+  line-height: 30px;
+  font-weight: bold;
+}
+.modal-body{
+  padding-bottom: 10px;
+}
+.modal-footer{
+  background-color: #F5F5F5;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.alert{
+  margin-top: 20px;
+}
+.alert h3{
+  margin-top:0;
+}
+.captcha-image{
+  border: 1px solid #999999;
+}
+.display-inline{
+  display: inline-block;
+  *display: inline;
+}
+.tooltip{
+  white-space: normal;
+}
+.popover{
+  z-index: 1300;
+}
+
+.sidebar-right-other img{
+  margin-bottom: 20px;
+}

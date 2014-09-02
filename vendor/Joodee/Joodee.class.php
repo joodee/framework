@@ -680,19 +680,24 @@ class Joodee{
 
     public static function flush(){
 
-        echo self::$output;
-
         if(ini_get('display_errors')){
 
             if(self::$rawOutput !== '' || !empty(self::$widgetRawOutput)){
 
-                FB::error(self::$rawOutput);
+                FB::error('Caught in STDOUT buffer:');
+
+                if(self::$rawOutput !== ''){
+
+                    FB::dump('controller', self::$rawOutput);
+                }
 
                 if(!empty(self::$widgetRawOutput)){
 
-                    FB::error(self::$widgetRawOutput);
+                    FB::dump('widgets', self::$widgetRawOutput);
                 }
             }
         }
+
+        echo self::$output;
     }
 }

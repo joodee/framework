@@ -15,7 +15,6 @@
   <link href="/lib/datepicker/css/datepicker.css" rel="stylesheet">
   <link href="/module/application/frontend/css/modern-business.css" rel="stylesheet">
   <link href="/module/application/frontend/css/theme.css" rel="stylesheet">
-  <link href="/module/demo/css/demo-home.css" rel="stylesheet">
 {$__view.links}
 
   <script type="text/javascript" src="/lib/jquery.min.js"></script>
