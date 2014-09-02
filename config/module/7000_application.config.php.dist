@@ -1,11 +1,576 @@
 <?php
-/**
- * This is configuration file for your custom application.
- */
+
+$routes = array();
+
+$routes['/'] = array(
+    /**
+     * Action Example:
+     *
+     * class AppController{
+     *      public static function indexAction(){}
+     * }
+     *
+     * Located in module/application/AppController.class.php
+     */
+    'action' => array(
+        /**
+         * All action calls are static:
+         *
+         * AppController::indexAction();
+         *
+         * This action is allowed for public access
+         * because 'access' setting is not set,
+         * see explanation and examples below.
+         */
+        'class' => 'App',
+        'method' => 'fetchTemplate',
+        'argument' => 'frontend/page_home.tpl'
+    ),
+    /**
+     * Config template view.
+     * If not set or empty then view of parent route will be loaded.
+     * Required for root ['/'] route!
+     */
+    'view' => array(
+        /**
+         * View language (not required).
+         * Child routes extend this setting and can overwrite it.
+         * Can be used in templates to determine document language, e.g:
+         * <html lang="{$route.view.lang_iso2}">
+         */
+        'lang_iso2' => 'en',
+        /**
+         * Default page title.
+         * Can be customized in controller this way:
+         * $route =& Locator::getRoute();
+         * $route['view']['title'] = 'Custom title';
+         */
+        'title' => 'Application Skeleton',
+        /**
+         * Path to main layout template.
+         * Child routes extend this setting and can overwrite it.
+         * Must be set for root ['/'] route!
+         */
+        'layout_template' => 'application/layout-frontend.tpl',
+        /**
+         * Path to module view assets (not required).
+         * Child routes extend this setting and can overwrite it.
+         * Can be used for multilanguage projects (e.g. '/en' ;)
+         */
+        'asset_path' => '/asset',
+        /**
+         * Widgets are simple controller actions with 'Widget' extension.
+         */
+        'widgets' => array(
+            'navbar_home'=>array(
+                array(
+                    'class'  => 'App',
+                    'method' => 'navbar',
+                    'argument' => 'frontend/widget_navbar.tpl',
+                    'alias' => 'navbar_home',
+                ),
+            ),
+            'sidebar_left'=>array(
+                /**
+                 * Following widget calls AppController::sidebarWidget()
+                 */
+                array(
+                    'class'  => 'App',
+                    'method' => 'sidebarLeft',
+                    /**
+                     * Widget alias is not required but if set then can be used
+                     * in 'filter' settings to filter it out in child routes.
+                     * See example below.
+                     */
+                    'alias' => 'sidebar_left',
+                    /**
+                     * Following setting is not required.
+                     * If set and not empty then hides this widget from all child routes.
+                     */
+                    'private' => false,
+                ),
+            ),
+            /**
+             * Use Smarty "widgets" plugin.
+             *
+             * Example: {widgets area="sidebar_right" class="sidebar-right-highlight"}
+             */
+            'sidebar_right'=>array(
+                array(
+                    'class'  => 'App',
+                    'method' => 'fetch',
+                    'argument' => 'frontend/widget_sidebar_right.tpl',
+                    'alias' => 'sidebar_right',
+                ),
+            ),
+            'below_controller' => array(
+                array(
+                    'class'  => 'App',
+                    'method' => 'fetch',
+                    'argument' => 'frontend/widget_below_controller.tpl',
+                    'private' => true
+                ),
+            ),
+            'footer' => array(
+                array(
+                    'class'  => 'App',
+                    'method' => 'fetch',
+                    'argument' => 'frontend/widget_footer.tpl',
+                ),
+            ),
+        ),
+        'meta' => array(
+            array('name'=>'keywords', 'content'=>'', 'indent' => '  '),
+            array('name'=>'description', 'content'=>'', 'indent' => '  '),
+            array('name'=>'generator', 'content'=>'Joodee Framework', 'indent' => '  '),
+        ),
+        'links' => array(
+            //array('type'=>'text/css', 'href'=>'/module/application/frontend/css/theme.css', 'rel'=>'stylesheet', 'order' => 1010, 'indent' => '  '),
+        ),
+        'scripts' => array(
+            //array('type' => 'text/javascript', 'src' => '/module/application/frontend/js/application.js', 'order' => 1000, 'indent' => '  '),
+        ),
+    ),
+);
+
+$routes['/']['account/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'accountArea',
+        /**
+         * Check access level list in joodee.config.php
+         *
+         * If access setting not set then execution is allowed for everyone.
+         *
+         * If set but empty then forbidden for all.
+         *
+         * Following example adds user_level access and removes
+         * manager_level access. Meaning is to display widget to
+         * user role only!
+         *
+         * Example: 'access' => array('user_level', '!manager_level'),
+         */
+        'access' => 'user_level',
+    ),
+);
+
+$routes['/']['example/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/index.tpl',
+        'widgets' => array(
+            'navbar_home_example'=>array(
+                array(
+                    'class'  => 'App',
+                    'method' => 'fetch',
+                    'argument' => 'frontend/widget_navbar_example.tpl',
+                    'alias' => 'navbar_home_example',
+                ),
+            ),
+        ),
+    ),
+);
+
+$routes['/']['example/']['404/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/404.tpl',
+    ),
+);
+
+$routes['/']['example/']['about/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/about.tpl',
+    ),
+);
+
+$routes['/']['example/']['blog-home-1/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/blog-home-1.tpl',
+    ),
+);
+
+$routes['/']['example/']['blog-home-2/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/blog-home-2.tpl',
+    ),
+);
+
+$routes['/']['example/']['blog-post/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/blog-post.tpl',
+    ),
+);
+
+$routes['/']['example/']['contact/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/contact.tpl',
+    ),
+);
+
+$routes['/']['example/']['faq/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/faq.tpl',
+    ),
+);
+
+$routes['/']['example/']['full-width/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/full-width.tpl',
+    ),
+);
+
+$routes['/']['example/']['portfolio-1-col/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/portfolio-1-col.tpl',
+    ),
+);
+
+$routes['/']['example/']['portfolio-2-col/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/portfolio-2-col.tpl',
+    ),
+);
+
+$routes['/']['example/']['portfolio-3-col/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/portfolio-3-col.tpl',
+    ),
+);
+
+$routes['/']['example/']['portfolio-4-col/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/portfolio-4-col.tpl',
+    ),
+);
+
+$routes['/']['example/']['portfolio-item/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/portfolio-item.tpl',
+    ),
+);
+
+$routes['/']['example/']['pricing/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/pricing.tpl',
+    ),
+);
+
+$routes['/']['example/']['services/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/services.tpl',
+    ),
+);
+
+$routes['/']['example/']['sidebar/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-frontend/sidebar.tpl',
+    ),
+);
+
+$routes['/']['admin/'] = array(
+    'action' => array(
+        'class' => 'AppAdmin',
+        'method' => 'index',
+        'access' => 'manager_level',
+    ),
+    'view' => array(
+        'title' => 'Backend',
+        'layout_template' => 'application/layout-backend.tpl',
+        'widgets'    => array(
+            'backend_sidebar_right' => array(
+                array(
+                    'class' => 'App',
+                    'method' => 'backendSidebar',
+                    'private' => true
+                ),
+            ),
+            'navbar_admin'=>array(
+                array(
+                    'class'  => 'AppAdmin',
+                    'method' => 'navbar',
+                    'argument' => 'backend/widget_navbar.tpl',
+                    'alias' => 'navbar_admin',
+                ),
+            ),
+        ),
+        'meta' => array(
+            array('name' => 'robots', 'content' => 'noindex,nofollow', 'indent' => '  '),
+        ),
+    ),
+);
+
+$routes['/']['admin/']['ui/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/index.tpl',
+        'widgets' => array(
+
+        ),
+    ),
+);
+
+$routes['/']['admin/']['ui/']['buttons/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/buttons.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['grid/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/grid.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['charts-morris/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/morris.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['charts-flot/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/flot.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['forms/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/forms.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['elements-panels-wells/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/panels-wells.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['elements-buttons/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/buttons.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['elements-notifications/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/notifications.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['elements-typography/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/typography.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['tables/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/tables.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['page-blank/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/blank.tpl',
+    ),
+);
+
+$routes['/']['admin/']['ui/']['page-login/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'blank',
+        'access' => 'manager_level',
+    ),
+    'view'=>array(
+        'layout_template' => 'application/example-backend/login.tpl',
+    ),
+);
+
+$routes['/']['terms-of-service/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'fetchTemplate',
+        'argument' => 'frontend/page_terms_of_service.tpl',
+    ),
+    'view' => array(
+        'title' => 'Terms of Service',
+    ),
+);
+
+$routes['/']['privacy-policy/'] = array(
+    'action' => array(
+        'class' => 'App',
+        'method' => 'fetchTemplate',
+        'argument' => 'frontend/page_privacy_policy.tpl',
+    ),
+    'view' => array(
+        'title' => 'Privacy policy',
+    ),
+);
+
+$routes['/']['error/'] = array(
+    'action' => array(
+        'class' => 'Error',
+        'method' => 'index'
+    ),
+    'view'   => array(
+        'widgets' => array(),
+        'filter' => array(
+            'sidebar_left',
+            'sidebar_right',
+        ),
+    ),
+);
+
 return array(
-    'roles'         => array(),
-    'access'        => array(),
-    'routes'        => array(),
-    'environment'   => array(),
-    'events'        => array(),
+    /**
+     * You can add and override different roles right in module config files,
+     * all configs will be merged when cache is turned off or expired.
+     *
+     * Check initial roles in joodee.config.php
+     *
+     * Keep in mind that module load ordering is essential.
+     */
+    'roles'     => array(),
+    /**
+     * Add or override access levels if required.
+     */
+    'access'      => array(),
+    /**
+     * Add or override environment configuration.
+     * Write module prefixes to keep specific module configuration safe.
+     */
+    'environment' => array(),
+    'routes'      => $routes,
+    'events' => array(
+        'onBeforeActionCall' => array(
+            array('class'=>'Error', 'method' => 'onBeforeActionCallCheckDatabaseConnection'),
+        ),
+    ),
 );

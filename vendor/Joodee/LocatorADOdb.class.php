@@ -2,10 +2,10 @@
 /**
  * Class LocatorADOdb
  *
- * Joodee Framework v1.0 - http://www.joodee.org
+ * Joodee Framework v1.1 - http://www.joodee.org
  * ==========================================================
  *
- * Copyright 2012-2013 Alexandr Zincenco <alex@joodee.org>
+ * Copyright 2012-2014 Alexandr Zincenco <alex@joodee.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,16 @@ class LocatorADOdb{
             }
 
             self::$instance[$alias] = ADONewConnection($connection['driver']);
-            self::$instance[$alias]->Connect($connection['host'], $connection['user'], $connection['password']);
+
+            if(empty($connection['persistent'])){
+
+                self::$instance[$alias]->Connect($connection['host'], $connection['user'], $connection['password']);
+            }
+            else{
+
+                self::$instance[$alias]->PConnect($connection['host'], $connection['user'], $connection['password']);
+            }
+
             self::$instance[$alias]->Execute("USE `{$connection['database']}`");
 
             if(isset($connection['debug'])){

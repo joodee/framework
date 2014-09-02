@@ -2,10 +2,10 @@
 /**
  * Class AccountManagerController
  *
- * Joodee Framework v1.0 - http://www.joodee.org
+ * Joodee Framework v1.1 - http://www.joodee.org
  * ==========================================================
  *
- * Copyright 2012-2013 Alexandr Zincenco <alex@joodee.org>
+ * Copyright 2012-2014 Alexandr Zincenco <alex@joodee.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -149,12 +149,12 @@ class AccountManagerController{
 
         Locator::getSmarty()->assign('rowsPerPage', $rowsPerPage);
 
-        return Locator::getSmarty()->fetch('accounts.tpl');
+        return Locator::getSmarty()->fetch('admin/page_accounts.tpl');
     }
 
-    public static function sidebarWidget(){
+    public static function filterWidget(){
 
-        return Locator::getSmarty()->fetch('sidebar_backend_accounts.tpl');
+        return Locator::getSmarty()->fetch('admin/account_filter.tpl');
     }
 
     public static function ajaxAccountInfo(){
@@ -175,7 +175,7 @@ class AccountManagerController{
 
         Locator::getSmarty()->assign('account', $account);
 
-        return Locator::getSmarty()->fetch('account_info.tpl');
+        return Locator::getSmarty()->fetch('admin/account_info.tpl');
     }
 
     public static function ajaxAccountLogin(){
@@ -366,7 +366,7 @@ class AccountManagerController{
 
         Locator::getSmarty()->assign('email', $email);
 
-        return Locator::getSmarty()->fetch('sendmail_form.tpl');
+        return Locator::getSmarty()->fetch('admin/sendmail_form.tpl');
     }
 
     private static function jsonSendMail(){
@@ -437,12 +437,13 @@ class AccountManagerController{
         }
 
         Locator::getSmarty()->assign('message', nl2br($_POST['message']));
-        $_POST['message'] = Locator::getSmarty()->fetch('mail_body_message_wrapper.tpl');
+        $_POST['message'] = Locator::getSmarty()->fetch('admin/mail_body_message_wrapper.tpl');
 
         $config =& Locator::getConfig();
         $account = AccountModel::getAccount($_SESSION['account']['id']);
 
         $mail = new PHPMailer();
+        $mail->CharSet='utf-8';
         $mail->SetFrom($config['environment']['global']['noreply_email'], $config['environment']['global']['company_name'], 0);
         $mail->AddReplyTo($account['email'], $account['first_name'].' '.$account['last_name']);
         $mail->Subject = $_POST['subject'];

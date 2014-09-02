@@ -11,6 +11,7 @@ return array(
                 'password'  => '',
                 'database'  => 'joodee_framework',
                 'driver'    => 'mysqlt',
+                'persistent'=> false,
                 'execute'   => array(
                     'SET names "utf8"',
                     'SET collation_connection="utf8_general_ci"',
