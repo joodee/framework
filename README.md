@@ -18,7 +18,7 @@ At: [demo.joodee.org](http://demo.joodee.org)
 
 ## Third party libraries included
 
-Smarty, ADOdb, PHPMailer, Securimage, jQuery, Twitter Bootstrap, jQuery UI, jQuery Validation, HTML5 Shiv.
+Smarty, ADOdb, PHPMailer, FirePHPCore, Securimage, jQuery, Twitter Bootstrap, jQuery Validation, HTML5 Shiv, etc.
 
 
 ## Modules included
