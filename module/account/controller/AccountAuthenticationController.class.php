@@ -2,10 +2,10 @@
 /**
  * Class AccountAuthenticationController
  *
- * Joodee Framework v1.0 - http://www.joodee.org
+ * Joodee Framework v1.1 - http://www.joodee.org
  * ==========================================================
  *
- * Copyright 2012-2013 Alexandr Zincenco <alex@joodee.org>
+ * Copyright 2012-2014 Alexandr Zincenco <alex@joodee.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,7 +112,7 @@ class AccountAuthenticationController{
 
         Locator::getSmarty()->assign('authFailCount', $authFailCount);
 
-        return Locator::getSmarty()->fetch('login.tpl');
+        return Locator::getSmarty()->fetch('page_authentication.tpl');
     }
 
     public static function modalAuthFormWidget(){
@@ -121,7 +121,7 @@ class AccountAuthenticationController{
 
         Locator::getSmarty()->assign('authFailCount', $authFailCount);
 
-        return Locator::getSmarty()->fetch('login_modal.tpl');
+        return Locator::getSmarty()->fetch('widget_authentication_modal.tpl');
     }
 
     public static function logoutAction($args = array()){

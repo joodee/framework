@@ -2,10 +2,10 @@
 /**
  * Class Validator
  *
- * Joodee Framework v1.0 - http://www.joodee.org
+ * Joodee Framework v1.1 - http://www.joodee.org
  * ==========================================================
  *
- * Copyright 2012-2013 Alexandr Zincenco <alex@joodee.org>
+ * Copyright 2012-2014 Alexandr Zincenco <alex@joodee.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -426,7 +426,7 @@ class Validator{
 
         if(!isset($args[0]) || !is_numeric($args[0])){
 
-            return "Invalid rule, valid example: 'min|2'";
+            return "Invalid rule, valid example: 'max|2'";
         }
 
         if(!is_string($data[$fieldName])){
@@ -449,7 +449,7 @@ class Validator{
             return '';
         }
 
-        if($data[$fieldName] >= $args[0]){
+        if($data[$fieldName] <= $args[0]){
 
             return '';
         }

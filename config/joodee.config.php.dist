@@ -33,7 +33,7 @@ $roles = array(
 $access = array(
     'user_level'    => array('user', 'manager', 'admin', 'demo_user', 'demo_manager', 'demo_admin'),
     'manager_level' => array('manager', 'admin', 'demo_manager', 'demo_admin'),
-    'admin_level'   => array('admin', 'demo', 'demo_admin'),
+    'admin_level'   => array('admin', 'demo_admin'),
 );
 
 $config = include 'bootstrap.config.php';
@@ -98,8 +98,8 @@ $events = array(
 );
 
 return array(
-    'roles'         => &$roles,
-    'access'        => &$access,
-    'environment'   => &$environment,
-    'events'        => &$events,
+    'roles'         => $roles,
+    'access'        => $access,
+    'environment'   => $environment,
+    'events'        => $events,
 );

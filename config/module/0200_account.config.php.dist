@@ -16,11 +16,11 @@ $routes['/'] = array(
             ),
         ),
         'links' => array(
-            array('type'=>'text/css', 'href'=>'/lib/jquery-ui/css/redmond/jquery-ui-1.10.2.custom.min.css', 'rel'=>'stylesheet', 'indent' => '  '),
+            array('type'=>'text/css', 'href'=>'/module/account/lib/jquery-ui-autocomplete/jquery-ui.min.css', 'rel'=>'stylesheet', 'indent' => '  '),
             array('type'=>'text/css', 'href'=>'/module/account/css/account.css', 'rel'=>'stylesheet', 'order' => 100, 'indent' => '  '),
         ),
         'scripts' => array(
-            array('type' => 'text/javascript', 'src' => '/lib/jquery-ui/js/jquery-ui-1.10.2.custom.min.js', 'indent' => '  '),
+            array('type' => 'text/javascript', 'src' => '/module/account/lib/jquery-ui-autocomplete/jquery-ui.min.js', 'indent' => '  '),
             array('type' => 'text/javascript', 'src' => '/module/account/js/account.js', 'order' => 100, 'indent' => '  '),
         )
     ),
@@ -55,12 +55,6 @@ $routes['/']['login/'] = array(
     ),
     'view' => array(
         'filter' => array(
-            'menu_top' => array(
-                'menu_top_guest',
-            ),
-            'header' => array(
-                'default'
-            ),
             'sidebar_left',
             'sidebar_right',
         ),
@@ -93,10 +87,10 @@ $routes['/']['admin/']['accounts/'] = array(
     ),
     'view' => array(
         'widgets'    => array(
-            'backend_sidebar_right' => array(
+            'account_filter' => array(
                 array(
                     'class' => 'AccountManager',
-                    'method' => 'sidebar',
+                    'method' => 'filter',
                     'private' => true
                 ),
             ),

@@ -1,30 +1,27 @@
 jQuery(function(){
 
-      jQuery(".login-form").validate({
-          rules:{
-              username:'required',
-              password:'required',
-              captcha_code:'required'
-          },
-          errorPlacement: function(error, element) {
-              element.parent().append(error);
-          },
-          success: function(label) {
-              jQuery('#'+label.attr('for')).closest('.control-group').removeClass('error').addClass('success');
-              label.remove();
-          },
-          highlight: function(element, errorClass, validClass) {
-              if (element.type == 'radio') {
-                  this.findByName(element.name).addClass(errorClass).removeClass(validClass);
-              } else {
-                  jQuery(element).addClass(errorClass).removeClass(validClass);
-              }
-              jQuery(element).closest('.control-group').removeClass('success').addClass('error');
-          },
-          submitHandler: function(form) {
-              document.cookie = "TestCookie=1; path=/; domain=." + window.location.hostname;
-              form.submit();
-          }
+    jQuery(".login-form").validate({
+        rules:{
+            username:'required',
+            password:'required',
+            captcha_code:'required'
+        },
+        errorPlacement: function(error, element) {
+          jQuery(element).closest('.form-group').find('.error-block').remove();
+          jQuery(element).closest('.form-group').find('div:first').append(jQuery(error).addClass('help-block'));
+        },
+        highlight: function(element, errorClass, validClass) {
+          jQuery(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function(element) {
+          jQuery(element).closest('.form-group').removeClass('has-error').find('.error-block').remove();
+        },
+        submitHandler: function(form) {
+            document.cookie = "TestCookie=1; path=/; domain=." + window.location.hostname;
+            form.submit();
+        },
+        errorElement: 'span',
+        errorClass: 'error-block'
     });
 
     jQuery('.login-modal-button').on('click', function(){
@@ -100,6 +97,7 @@ function bindPhoneFieldEvents(phoneInputSelector, locationInputSelector, flagIco
     });
 
     jQuery(locationInputSelector).autocomplete({
+        appendTo:jQuery(phoneInputSelector).parent().parent(),
         minLength: 0,
         width: 200,
         source: function(request, response){
@@ -122,15 +120,13 @@ function bindPhoneFieldEvents(phoneInputSelector, locationInputSelector, flagIco
         },
         select: function(event, ui) {
 
-            jQuery(phoneInputSelector).val('+'+locationList[ui.item.value].phone).focus();
+            jQuery(phoneInputSelector).focus();
+            jQuery(phoneInputSelector).val('');
+            jQuery(phoneInputSelector).val('+'+locationList[ui.item.value].phone);
             jQuery(flagIconWrapperSelector + ' .icon-location-flag').css('background-position', '0 -' + (locationList[ui.item.value].flag*flagHeight) +'px');
         },
         open: function(event, ui){
-            jQuery('.ui-autocomplete-mobile-phone-location:last').find('.ui-menu-item a').each(function(i, item){
-
-                var html = jQuery(item).html().replace('&lt;span ', '<span ').replace('&gt;&lt;/span&gt;', '></span>').replace('&lt;span class="phone-location-code"&gt;', '<span class="phone-location-code">').replace('&lt;/span&gt;', '</span>');
-                jQuery(item).html(html);
-            });
+            jQuery(phoneInputSelector).parent().parent().find('.ui-autocomplete').css({left:0,top:-1});
         },
         create: function(event, ui){
 
@@ -144,7 +140,12 @@ function bindPhoneFieldEvents(phoneInputSelector, locationInputSelector, flagIco
                 jQuery(flagIconWrapperSelector + ' .icon-location-flag').css('background-position', '0 -' + (locationList[defaultLocationCode].flag*flagHeight) +'px');
             }
         }
-    });
+    }).data("ui-autocomplete")._renderItem = function (ul, item) {
+         return $("<li></li>")
+             .data("item.autocomplete", item)
+             .append(item.label)
+             .appendTo(ul);
+     };
 
     jQuery('.ui-autocomplete:last').addClass('ui-autocomplete-mobile-phone-location');
 

@@ -2,10 +2,10 @@
 /**
  * Class AccountRegistrationModel
  *
- * Joodee Framework v1.0 - http://www.joodee.org
+ * Joodee Framework v1.1 - http://www.joodee.org
  * ==========================================================
  *
- * Copyright 2012-2013 Alexandr Zincenco <alex@joodee.org>
+ * Copyright 2012-2014 Alexandr Zincenco <alex@joodee.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ class AccountRegistrationModel extends AccountModel{
         $query = "INSERT INTO account (acc_id, first_name, last_name, birthday, gender, nickname, username, activated, email, email_canonical, mobile_phone, location_iso2, timezone, lang_iso2, algorithm, salt, password, token, last_logged_ip, role, locked, activation_expires_at, created_at, updated_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW());";
 
-        Locator::getAdo()->Execute($query, array(null, $account['first_name'], $account['last_name'], $account['birthday_year'].'-'.sprintf('%02d', $account['birthday_month']).'-'.sprintf('%02d', $account['birthday_day']), $account['gender'], $account['nickname'], $account['username'], $account['activated'], $account['email'], $account['email_canonical'], $account['mobile_phone'], $account['location_iso2'], $account['timezone'], $account['lang_iso2'], $account['algorithm'], $account['salt'], $account['password'], $account['token'], $account['last_logged_ip'], $account['role'], $account['locked'], $account['activation_expires_at']));
+        Locator::getAdo()->Execute($query, array(null, $account['first_name'], $account['last_name'], $account['birthday'], $account['gender'], $account['nickname'], $account['username'], $account['activated'], $account['email'], $account['email_canonical'], $account['mobile_phone'], $account['location_iso2'], $account['timezone'], $account['lang_iso2'], $account['algorithm'], $account['salt'], $account['password'], $account['token'], $account['last_logged_ip'], $account['role'], $account['locked'], $account['activation_expires_at']));
 
         if(!$accId = Locator::getAdo()->Insert_ID()){
 
